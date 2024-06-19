@@ -26,19 +26,30 @@ function App() {
   }, [getTokenFromLocalStorage()]);
 
   const { dataCurrentUser } = useSelector((state) => state.user);
-  console.log("🚀 ~ App ~ dataCurrentUser:", dataCurrentUser);
+
+  const isAuthenticated = !!(
+    dataCurrentUser &&
+    Object.keys(dataCurrentUser).length &&
+    getTokenFromLocalStorage()
+  );
   return (
     <Suspense fallback={<SuspenseFallback></SuspenseFallback>}>
       <Routes>
         <Route element={<Layout></Layout>}>
           <Route
-            path={Epath.dashboard}
-            element={<DashboardPage></DashboardPage>}
-          ></Route>
-          <Route
-            path={Epath.categories}
-            element={<CategoriesPage></CategoriesPage>}
-          ></Route>
+            element={
+              <AuthRoute auth={true} isAuthenticated={isAuthenticated} />
+            }
+          >
+            <Route
+              path={Epath.dashboard}
+              element={<DashboardPage></DashboardPage>}
+            ></Route>
+            <Route
+              path={Epath.categories}
+              element={<CategoriesPage></CategoriesPage>}
+            ></Route>
+          </Route>
           <Route path="*" element={<NotFoundPage></NotFoundPage>}></Route>
         </Route>
 

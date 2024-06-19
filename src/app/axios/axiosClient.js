@@ -30,7 +30,7 @@ const injectToken = (config) => {
   if (token !== null && config.headers) {
     config.headers.Authorization = `Bearer ${token}`;
   }
-
+  config.withCredentials = true;
   return config;
 };
 

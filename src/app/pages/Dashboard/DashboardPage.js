@@ -7,16 +7,17 @@ import {
   faSackDollar,
 } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
-import ChartColumn from "../../components/Chart/ChartColumn";
-import ChartPie from "../../components/Chart/ChartPie";
+import { useSelector } from "react-redux";
 
 const DashboardPage = () => {
+  const { dataCurrentUser } = useSelector((state) => state.user);
+
   return (
     <div className="">
       <div className="relative flex justify-between items-center bg-white p-5  rounded-md">
         <div>
           <h1 className="text-[20px] font-medium text-gray-700">
-            Xin Chào Boss Tiến !
+            Xin Chào Boss {dataCurrentUser?.userName} !
           </h1>
           <p className="pt-4 text-gray5">
             Chất lượng dịch vụ là ưu tiên hàng đầu của chúng ta. 😎
@@ -60,14 +61,6 @@ const DashboardPage = () => {
           colorIcon="text-[#20c997]"
           to="/admin/products/product_list"
         ></BoxOverviewItem>
-      </div>
-      <div className="mt-[80px]  flex items-start gap-x-[250px]">
-        <div className=" w-[600px]  h-[300px]">
-          <ChartColumn></ChartColumn>
-        </div>
-        <div className=" w-[400px]  h-[300px]">
-          <ChartPie></ChartPie>
-        </div>
       </div>
     </div>
   );

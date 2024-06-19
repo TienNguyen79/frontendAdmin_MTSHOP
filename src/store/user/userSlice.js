@@ -5,6 +5,7 @@ import {
   handleGetCurrentUser,
   handleGetUser,
   handleLoginAdmin,
+  handleLogout,
 } from "./handleUser";
 
 //Reducer Là các hàm xử lý các action và cập nhật trạng thái của ứng dụng.
@@ -56,6 +57,14 @@ const userSlice = createSlice({
         state.dataCurrentUser = action.payload;
       })
       .addCase(handleGetCurrentUser.rejected, (state, action) => {
+        state.dataCurrentUser = null;
+      })
+
+      //logout
+      .addCase(handleLogout.fulfilled, (state, action) => {
+        state.dataCurrentUser = null;
+      })
+      .addCase(handleLogout.rejected, (state, action) => {
         state.dataCurrentUser = null;
       })
 

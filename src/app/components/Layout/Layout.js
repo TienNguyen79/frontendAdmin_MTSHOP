@@ -8,13 +8,13 @@ import SideBar from "./parts/SideBar";
 const Layout = () => {
   return (
     <div className="h-full">
-      <div className="fixed top-0 left-0 bottom-0 shadow-custom2 w-[292px] h-screen ">
+      <div className="fixed top-0 left-0 bottom-0 shadow-custom2 w-[292px] h-screen overflow-y-auto ">
         <div className="flex flex-col gap-y-4">
           <div className="flex items-center  gap-x-2 border-b-[2px] border-text2">
             <Image url="/logo3.png" className="w-[100px] h-[100px]"></Image>
-            <h1 className=" font-medium text-primary text-[22px] italic">
+            {/* <h1 className=" font-medium text-primary text-[22px] italic">
               ADMIN MTSHOP
-            </h1>
+            </h1> */}
           </div>
           <SideBar></SideBar>
         </div>

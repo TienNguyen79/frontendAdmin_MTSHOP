@@ -26,7 +26,8 @@ const Button = ({
       defaultClassName = defaultClassName + "bg-primary text-[#FFF] ";
       break;
     case "secondary":
-      defaultClassName = defaultClassName + "bg-greenGray1 text-primary ";
+      defaultClassName =
+        defaultClassName + "text-primary bg-transparent border border-primary";
       break;
     case "secondary2":
       defaultClassName = defaultClassName + "bg-greenGray1 text-primary ";
@@ -35,14 +36,16 @@ const Button = ({
       defaultClassName = defaultClassName + "bg-gray5_1 text-gray3 ";
       break;
     case "ghost":
-      defaultClassName = defaultClassName + "bg-primary text-[#FFF] ";
+      defaultClassName =
+        defaultClassName +
+        " bg-transparent  text-[#FFF] border border-[#FFF]   ";
       break;
     case "cart":
       defaultClassName = defaultClassName + "bg-gray5_1 text-gray7  ";
       break;
     case "discard":
       defaultClassName =
-        defaultClassName + "bg-transparent border border-danger text-danger   ";
+        defaultClassName + "bg-transparent border border-error text-error   ";
       break;
     default:
       break;

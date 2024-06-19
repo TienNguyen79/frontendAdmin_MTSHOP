@@ -2,10 +2,11 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import requestGetUser, {
   requestGetCurrentUser,
   requestLogin,
+  requestlogout,
 } from "./requestUser";
 import { OK } from "../../utils/httpStatus";
 import { toast } from "react-toastify";
-import { saveToken } from "../../utils/localStorage";
+import { removeToken, saveToken } from "../../utils/localStorage";
 import { statusRole, statusUser } from "../../utils/commom";
 
 export const handleLoginAdmin = createAsyncThunk(
@@ -46,6 +47,24 @@ export const handleGetCurrentUser = createAsyncThunk(
     } catch (error) {
       // toast.error("Bạn Cần Đăng Nhập", { autoClose: 800 });
       console.log("🚀 ~ error:", error);
+    }
+  }
+);
+
+export const handleLogout = createAsyncThunk(
+  "user/handleLogout",
+  async (data, thunkAPI) => {
+    try {
+      const response = await requestlogout();
+
+      if (response.status === OK) {
+        removeToken();
+        data.callback?.();
+        return response.data;
+      }
+    } catch (error) {
+      thunkAPI.rejectWithValue({});
+      toast.error(error.response.data.ms, { autoClose: 900 });
     }
   }
 );

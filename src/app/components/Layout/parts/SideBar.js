@@ -1,4 +1,5 @@
 import { Menu } from "antd";
+import Swal from "sweetalert2";
 import {
   BookMinus,
   Home,
@@ -9,7 +10,10 @@ import {
   User,
 } from "lucide-react";
 import React from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { handleLogout } from "../../../../store/user/handleUser";
+import { Epath } from "../../../routes/routerConfig";
 const items = [
   {
     key: "dashboard",
@@ -108,11 +112,30 @@ const items = [
 ];
 const SideBar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const onClick = (e) => {
     const { key } = e;
 
     if (key === "logout") {
-      alert("Logout");
+      Swal.fire({
+        title: `Bạn muốn đăng xuất ?`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Đúng vậy",
+        cancelButtonText: "Hủy Bỏ",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dispatch(
+            handleLogout({
+              callback: () => {
+                navigate(Epath.loginPage);
+              },
+            })
+          );
+        }
+      });
     } else {
       navigate(`/${key}`);
     }
