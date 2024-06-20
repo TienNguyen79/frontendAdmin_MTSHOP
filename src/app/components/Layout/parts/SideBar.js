@@ -35,8 +35,8 @@ const items = [
     icon: <Shirt size={"18px"} />,
     children: [
       {
-        key: "5",
-        label: "Option 5",
+        key: "products",
+        label: "Danh Sách Sản Phẩm",
       },
       {
         key: "6",
@@ -147,7 +147,7 @@ const SideBar = () => {
         // style={{
         //   width: 256,
         // }}
-        className="text-[16px]  "
+        className="text-[16px]  font-body font-medium"
         defaultSelectedKeys={["dashboard"]}
         defaultOpenKeys={["dashboard"]}
         mode="inline"

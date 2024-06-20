@@ -1,5 +1,8 @@
 import { createSlice, createAction } from "@reduxjs/toolkit";
-import { handleGetAllCategory } from "./handleCategory";
+import {
+  handleGetAllCategory,
+  handlegetDetailsCategory,
+} from "./handleCategory";
 
 //Reducer Là các hàm xử lý các action và cập nhật trạng thái của ứng dụng.
 export const setLoading = createAction("setLoading");
@@ -7,6 +10,7 @@ export const setLoading = createAction("setLoading");
 // fullfiled | pending | rejected
 const initialState = {
   dataAllCategory: [],
+  dataDetailsCategory: {},
   loading: false,
 };
 const categorySlice = createSlice({
@@ -26,6 +30,13 @@ const categorySlice = createSlice({
       })
       .addCase(handleGetAllCategory.rejected, (state, action) => {
         state.dataAllCategory = [];
+      })
+      // details
+      .addCase(handlegetDetailsCategory.fulfilled, (state, action) => {
+        state.dataDetailsCategory = action.payload;
+      })
+      .addCase(handlegetDetailsCategory.rejected, (state, action) => {
+        state.dataDetailsCategory = {};
       });
   },
 });

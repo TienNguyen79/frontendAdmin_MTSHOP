@@ -11,6 +11,7 @@
 html {
   min-height: 100%;
   width: 100%;
+  font-family: "Roboto", sans-serif;
 }
 
 body {
@@ -96,4 +97,11 @@ body {
 }
 .scroll-hidden::-webkit-scrollbar {
   display: none;
+}
+
+.ant-select-selection-placeholder {
+  @apply font-body text-[#9CA3AF] font-semibold text-[16px];
+}
+.ant-select-selection-item {
+  @apply font-body text-text1 font-semibold text-[16px];
 }

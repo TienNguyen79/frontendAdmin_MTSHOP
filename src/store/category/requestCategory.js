@@ -9,3 +9,22 @@ export default function requestGetAllCategory(data) {
     `/categories?limit=${limit}&page=${page}&name=${name}`
   );
 }
+
+export function requestGetDetailsCategory(id) {
+  return axiosClient.get(`/categories/${id}`);
+}
+
+export function requestAddCategory(data) {
+  return axiosClient.post(`/categories`, data);
+}
+
+export function requestUpdateCategory(data) {
+  return axiosClient.put(
+    `/categories/${data.id}?parentId=${data.parentId || ""}`,
+    data
+  );
+}
+
+export function requestDeleteCategory(data) {
+  return axiosClient.delete(`/categories/${data.id}`);
+}

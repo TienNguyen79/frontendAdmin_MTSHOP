@@ -10,6 +10,12 @@ export const Epath = {
 
   //categories
   categories: "/categories",
+  addCategory: "/categories/create",
+  updateCategory: "/categories/update/:id",
+
+  // product
+
+  products: "/products",
 
   testPage: "/test",
   testPage2: "/test2",

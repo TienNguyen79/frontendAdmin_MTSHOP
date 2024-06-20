@@ -10,6 +10,8 @@ import Layout2 from "./components/Layout/Layout2";
 import { Epath } from "./routes/routerConfig";
 import AuthRoute from "./routes/AuthRoute";
 import { getTokenFromLocalStorage } from "../utils/localStorage";
+import ActionCategoryPage from "./pages/Category/ActionCategoryPage";
+import ProductsPage from "./pages/Product/ProductsPage";
 
 const TestPage2 = lazy(() => import("./pages/TestPage2"));
 const TestPage = lazy(() => import("./pages/TestPage"));
@@ -48,6 +50,18 @@ function App() {
             <Route
               path={Epath.categories}
               element={<CategoriesPage></CategoriesPage>}
+            ></Route>
+            <Route
+              path={Epath.addCategory}
+              element={<ActionCategoryPage></ActionCategoryPage>}
+            ></Route>
+            <Route
+              path={Epath.updateCategory}
+              element={<ActionCategoryPage></ActionCategoryPage>}
+            ></Route>
+            <Route
+              path={Epath.products}
+              element={<ProductsPage></ProductsPage>}
             ></Route>
           </Route>
           <Route path="*" element={<NotFoundPage></NotFoundPage>}></Route>
