@@ -16,6 +16,7 @@ export const Epath = {
   // product
 
   products: "/products",
+  addproduct: "/products/add",
 
   testPage: "/test",
   testPage2: "/test2",

@@ -32,10 +32,10 @@ const CategoriesPage = () => {
         return (
           <h1
             className={`text-[16px] font-medium ${
-              record.isChild && "text-primary-"
+              record.isChild && "text-primary"
             } `}
           >
-            {id}
+            #{id}
           </h1>
         );
       },

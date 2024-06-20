@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { requestGetAllProduct, requestGetAllSize } from "./requestProduct";
+import { requestGetAllProduct, requestGetAllVariant } from "./requestProduct";
 import { toast } from "react-toastify";
 
 export const handleGetAllProduct = createAsyncThunk(
@@ -14,23 +14,23 @@ export const handleGetAllProduct = createAsyncThunk(
   }
 );
 
-// export const handleGetQuantityProduct = createAsyncThunk(
-//   "product/handleGetQuantityProduct",
-//   async (data, thunkAPI) => {
-//     try {
-//       const response = await requestGetQuantityProduct(data);
-//       return response.data.results;
-//     } catch (error) {
-//       console.log("🚀 ~ error:", error);
-//     }
-//   }
-// );
-
 export const handleGetAllSize = createAsyncThunk(
   "product/handleGetAllSize",
   async (data, thunkAPI) => {
     try {
-      const response = await requestGetAllSize();
+      const response = await requestGetAllVariant(data);
+      return response.data.results;
+    } catch (error) {
+      console.log("🚀 ~ error:", error);
+    }
+  }
+);
+
+export const handleGetAllColor = createAsyncThunk(
+  "product/handleGetAllColor",
+  async (data, thunkAPI) => {
+    try {
+      const response = await requestGetAllVariant(data);
       return response.data.results;
     } catch (error) {
       console.log("🚀 ~ error:", error);

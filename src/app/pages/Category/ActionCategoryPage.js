@@ -98,7 +98,7 @@ const ActionCategoryPage = () => {
     }
   }, [id, setValue]);
   return (
-    <LayoutDetail title="Thêm Mới Danh Mục">
+    <LayoutDetail title={`${id ? "Cập Nhật Danh Mục" : "Thêm Mới Danh Mục"} `}>
       <Box>
         <form onSubmit={handleSubmit(handleActionForm)}>
           <div className="flex flex-col gap-y-5">

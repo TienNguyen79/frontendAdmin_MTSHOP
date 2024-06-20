@@ -7,11 +7,13 @@ export function requestGetAllProduct(data) {
   const name = data?.name;
   const category = data?.category;
 
+  const queryName = name ? `&name=${name}` : "";
   return axiosClient.get(
-    `/product?limit=${limit}&page=${page}&name=${name}&category=${category}`
+    `/product?limit=${limit}&page=${page}${queryName}&category=${category}`
   );
 }
 
-export function requestGetAllSize() {
-  return axiosClient.get(`/product/sizes`);
+export function requestGetAllVariant(data) {
+  const type = data.type;
+  return axiosClient.get(`/product/variant?type=${type}`);
 }

@@ -1,6 +1,7 @@
 import { createSlice, createAction } from "@reduxjs/toolkit";
 import {
   handleFilterProduct,
+  handleGetAllColor,
   handleGetAllProduct,
   handleGetAllSize,
 } from "./handleProduct";
@@ -11,9 +12,8 @@ export const setLoading = createAction("setLoading");
 // fullfiled | pending | rejected
 const initialState = {
   dataAllProduct: [],
-
-  dataQuantityProduct: {},
   dataAllSize: [],
+  dataAllColor: [],
   loading: false,
   loadingSearchProduct: false,
 };
@@ -39,31 +39,22 @@ const productSlice = createSlice({
       .addCase(handleGetAllProduct.rejected, (state, action) => {
         state.dataAllProduct = [];
         state.loadingSearchProduct = false;
+      })
+
+      //data get all size Product
+      .addCase(handleGetAllSize.fulfilled, (state, action) => {
+        state.dataAllSize = action.payload;
+      })
+      .addCase(handleGetAllSize.rejected, (state, action) => {
+        state.dataAllSize = [];
+      })
+      //data get all color Product
+      .addCase(handleGetAllColor.fulfilled, (state, action) => {
+        state.dataAllColor = action.payload;
+      })
+      .addCase(handleGetAllColor.rejected, (state, action) => {
+        state.dataAllColor = [];
       });
-
-    // //data quantity Product
-    // .addCase(handleGetQuantityProduct.fulfilled, (state, action) => {
-    //   state.dataQuantityProduct = action.payload;
-    // })
-    // .addCase(handleGetQuantityProduct.rejected, (state, action) => {
-    //   state.dataQuantityProduct = {};
-    // })
-
-    // //data filter  Product
-    // .addCase(handleFilterProduct.fulfilled, (state, action) => {
-    //   state.dataAllProduct = action.payload;
-    // })
-    // .addCase(handleFilterProduct.rejected, (state, action) => {
-    //   state.dataAllProduct = [];
-    // })
-
-    // //data get all size Product
-    // .addCase(handleGetAllSize.fulfilled, (state, action) => {
-    //   state.dataAllSize = action.payload;
-    // })
-    // .addCase(handleGetAllSize.rejected, (state, action) => {
-    //   state.dataAllSize = [];
-    // });
   },
 });
 // export const { setLoading } = productSlice.actions;
