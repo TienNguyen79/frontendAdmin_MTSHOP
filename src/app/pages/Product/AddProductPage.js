@@ -14,11 +14,19 @@ import {
 import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
 import Button from "../../components/Button/Button";
+import { Epath } from "../../routes/routerConfig";
+import ImageUpload from "../../components/Image/ImageUpload";
+import { CircleX, Plus } from "lucide-react";
 
 const AddProductPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [description, setDescription] = useState("");
+  const [bigImg, setBigImg] = useState(""); // State để lưu trữ URL ảnh chính
+  const [smallImgs, setSmallImgs] = useState([""]); // State để lưu trữ URL các ảnh nhỏ
+  const [allImgs, setAllImgs] = useState([]); // State để lưu trữ URL của tất cả ảnh (ảnh chính + ảnh nhỏ)
+  console.log("🚀 ~ AddProductPage ~ allImgs:", allImgs);
+
   const {
     control,
     handleSubmit,
@@ -67,8 +75,28 @@ const AddProductPage = () => {
     console.log(`selected ${value}`);
   };
 
+  const handleAddProductForm = (data) => {
+    console.log("ARR:", allImgs);
+  };
+
+  // Cập nhật mảng allImgs mỗi khi bigImg hoặc smallImgs thay đổi
+  useEffect(() => {
+    setAllImgs([bigImg, ...smallImgs]);
+  }, [bigImg, smallImgs]);
+
+  // Hàm thêm một ảnh nhỏ vào danh sách
+  const addImageUpload = () => {
+    setSmallImgs([...smallImgs, ""]);
+  };
+
+  // Hàm xóa một ảnh nhỏ khỏi danh sách
+  const removeImageUpload = (index) => {
+    const newSmallImgs = smallImgs.filter((_, i) => i !== index);
+    setSmallImgs(newSmallImgs);
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit(handleAddProductForm)}>
       <LayoutDetail title="Thêm Sản Phẩm">
         <div className="grid grid-cols-5 gap-x-5">
           <div className="col-span-3">
@@ -141,7 +169,63 @@ const AddProductPage = () => {
           </div>
           <div className="col-span-2">
             <div className="flex flex-col gap-y-4">
-              <h1>ok</h1>
+              <Box>
+                <div className="flex flex-col gap-y-2">
+                  <BoxFiled title="Ảnh Chính">
+                    <div className="relative">
+                      <ImageUpload
+                        className="min-w-[400px] h-[400px]"
+                        modeSmall
+                        name="bigImg"
+                        onChange={(name, data) => setBigImg(data.url)}
+                        getValues={bigImg}
+                        setValue={setValue}
+                      ></ImageUpload>
+                      {bigImg && (
+                        <button
+                          onClick={() => setBigImg("")}
+                          className="absolute top-[-20px] right-0 p-1 text-white rounded-full"
+                        >
+                          <CircleX color="#ccc" />
+                        </button>
+                      )}
+                    </div>
+                  </BoxFiled>
+                  <BoxFiled title="Hình Ảnh Nhỏ">
+                    <div
+                      className="inline-block py-1 px-1 bg-slate-500 rounded-sm cursor-pointer"
+                      onClick={addImageUpload}
+                    >
+                      <Plus color="#FFF" size={"16px"}></Plus>
+                    </div>
+                    <div className="grid grid-cols-4 gap-x-2 gap-y-5 mt-4">
+                      {smallImgs.map((url, index) => (
+                        <div className="relative" key={index}>
+                          <ImageUpload
+                            modeSmall={true}
+                            name={`image_${index}`}
+                            onChange={(name, data) => {
+                              const newSmallImgs = [...smallImgs];
+                              newSmallImgs[index] = data.url;
+                              setSmallImgs(newSmallImgs);
+                            }}
+                            getValues={url}
+                            setValue={setValue}
+                            className="w-[80px] h-[80px]"
+                          />
+
+                          <button
+                            onClick={() => removeImageUpload(index)}
+                            className="absolute top-[-20px] right-0 p-1 text-white rounded-full"
+                          >
+                            <CircleX color="#ccc" />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </BoxFiled>
+                </div>
+              </Box>
               <Box className="flex flex-col gap-y-4">
                 <BoxFiled title="Giá">
                   <Input
@@ -175,6 +259,7 @@ const AddProductPage = () => {
           <Button
             kind="discard"
             className="w-[200px] rounded-lg overflow-hidden hover:opacity-80"
+            href={Epath.products}
           >
             Hủy Bỏ
           </Button>

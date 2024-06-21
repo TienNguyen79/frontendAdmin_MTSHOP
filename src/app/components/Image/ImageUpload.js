@@ -2,6 +2,7 @@ import React, { Fragment, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
+import { CircleX, X } from "lucide-react";
 
 const ImageUpload = ({
   onChange = () => {},
@@ -9,6 +10,7 @@ const ImageUpload = ({
   setValue,
   getValues = "",
   className = "w-[200px] h-[200px] ",
+  modeSmall = false,
 }) => {
   const [showImage, setShowImage] = useState("");
   const handleUploadImage = async (e) => {
@@ -59,7 +61,7 @@ const ImageUpload = ({
     setValue && setValue(name, "");
   };
   return (
-    <div className="inline-flex">
+    <div className="inline-flex relative">
       <label
         className={`  border border-gray-200  border-dashed overflow-hidden ${
           showImage && "pointer-events-none"
@@ -91,7 +93,7 @@ const ImageUpload = ({
           />
         )}
       </label>
-      {showImage && (
+      {showImage && !modeSmall && (
         <div>
           <button
             type="button"
@@ -116,6 +118,15 @@ const ImageUpload = ({
           </button>
         </div>
       )}
+      {/* {showImage && modeSmall && (
+        <div
+          className="absolute top-[-8px] right-8 cursor-pointer"
+          onClick={handleDeleteImage}
+        >
+          {" "}
+          <CircleX color="#ccc" />
+        </div>
+      )} */}
     </div>
   );
 };
