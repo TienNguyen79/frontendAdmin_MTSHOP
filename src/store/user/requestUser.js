@@ -1,8 +1,12 @@
 import axios from "axios";
 import { axiosClient } from "../../app/axios/axiosClient";
 
+export function requestOverview() {
+  return axiosClient.get(`/overview`);
+}
+
 export function requestLogin(data) {
-  return axiosClient.post(`/login`, data);
+  return axiosClient.post(`/admin/login`, data);
 }
 
 export function requestlogout() {

@@ -3,7 +3,7 @@ export const Epath = {
   notFoundPage: "/notfound",
 
   // Dashboard Page
-  dashboard: "/dashboard",
+  dashboard: "/",
 
   // LoginPage
   loginPage: "/login",
@@ -17,6 +17,9 @@ export const Epath = {
 
   products: "/products",
   addproduct: "/products/add",
+  updateProduct: "/products/update/:id",
+
+  productDetails: "/productDetails/:id",
 
   testPage: "/test",
   testPage2: "/test2",

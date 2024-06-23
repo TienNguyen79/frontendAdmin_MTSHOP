@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import requestGetUser, {
   requestGetCurrentUser,
   requestLogin,
+  requestOverview,
   requestlogout,
 } from "./requestUser";
 import { OK } from "../../utils/httpStatus";
@@ -16,18 +17,10 @@ export const handleLoginAdmin = createAsyncThunk(
       const response = await requestLogin(data);
 
       if (response.status === OK) {
-        if (
-          response.data.results.roleID === statusRole.ADMIN &&
-          response.data.results.status !== statusUser.BAN
-        ) {
-          toast.success("Đăng nhập thành công", { autoClose: 1000 });
-          saveToken(response.data.token.accessToken);
-          data.callback?.();
-          return response.data.results;
-        } else {
-          toast.error("Tài khoản không tồn tại", { autoClose: 1000 });
-          return;
-        }
+        toast.success("Đăng nhập thành công", { autoClose: 1000 });
+        saveToken(response.data.token.accessToken);
+        data.callback?.();
+        return response.data.results;
       }
     } catch (error) {
       toast.error(error.response.data.ms, { autoClose: 900 });
@@ -65,6 +58,18 @@ export const handleLogout = createAsyncThunk(
     } catch (error) {
       thunkAPI.rejectWithValue({});
       toast.error(error.response.data.ms, { autoClose: 900 });
+    }
+  }
+);
+
+export const handleGetOverview = createAsyncThunk(
+  "user/handleGetOverview",
+  async (query, thunkAPI) => {
+    try {
+      const response = await requestOverview();
+      return response.data.results;
+    } catch (error) {
+      console.log("🚀 ~ error:", error);
     }
   }
 );

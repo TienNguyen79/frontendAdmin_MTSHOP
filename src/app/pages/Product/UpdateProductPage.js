@@ -3,7 +3,7 @@ import LayoutDetail from "../../components/Layout/LayoutDetail";
 import Box from "../../components/Commom/Box";
 import Input from "../../components/Input/Input";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import BoxFiled from "../../components/Commom/BoxFiled";
 import { Select } from "antd";
@@ -11,6 +11,8 @@ import {
   handleAddProduct,
   handleGetAllColor,
   handleGetAllSize,
+  handleGetDetailsProduct,
+  handleUpdateProduct,
 } from "../../../store/product/handleProduct";
 import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
@@ -21,7 +23,7 @@ import { CircleX, Plus } from "lucide-react";
 import { handleGetAllCategory } from "../../../store/category/handleCategory";
 import { toast } from "react-toastify";
 
-const AddProductPage = () => {
+const UpdateProductPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [description, setDescription] = useState("");
@@ -32,6 +34,8 @@ const AddProductPage = () => {
   const [bigImg, setBigImg] = useState(""); // State để lưu trữ URL ảnh chính
   const [smallImgs, setSmallImgs] = useState([]); // State để lưu trữ URL các ảnh nhỏ
   const [allImgs, setAllImgs] = useState([]); // State để lưu trữ URL của tất cả ảnh (ảnh chính + ảnh nhỏ)
+
+  const { id } = useParams();
 
   const {
     control,
@@ -47,11 +51,16 @@ const AddProductPage = () => {
     dispatch(handleGetAllCategory());
   }, []);
 
+  useEffect(() => {
+    dispatch(handleGetDetailsProduct(id));
+  }, [dispatch, id]);
+
   const { dataAllSize } = useSelector((state) => state.product);
   const { dataAllColor } = useSelector((state) => state.product);
   const dataAllCategory = useSelector(
     (state) => state.category.dataAllCategory.results
   );
+  const { dataDetailsProduct } = useSelector((state) => state.product);
 
   const optionSize =
     dataAllSize?.length > 0 &&
@@ -66,6 +75,26 @@ const AddProductPage = () => {
       value: item.id,
       label: item.description,
     }));
+
+  const fillArrSize =
+    dataDetailsProduct?.productVariantUnique?.ArrUniqueSize?.length > 0
+      ? dataDetailsProduct?.productVariantUnique?.ArrUniqueSize?.map(
+          (size) => size.id
+        )
+      : [];
+
+  const fillArrColor =
+    dataDetailsProduct?.productVariantUnique?.ArrUniqueColor?.length > 0
+      ? dataDetailsProduct?.productVariantUnique?.ArrUniqueColor?.map(
+          (color) => color.id
+        )
+      : [];
+
+  const fillSmallImage =
+    dataDetailsProduct?.image?.length > 0
+      ? dataDetailsProduct?.image?.map((image, index) => image.url)
+      : [];
+  fillSmallImage?.shift();
 
   const flattenCategories = (categories) => {
     const result = [];
@@ -116,19 +145,19 @@ const AddProductPage = () => {
     setSmallImgs(newSmallImgs);
   };
 
-  const handleAddProductForm = (data) => {
+  const handleUpdateProductForm = (data) => {
     const dataForm = {
+      id: id,
       name: data.name,
       categoryId: idCategory,
       description: description,
       price: Number(data.price),
       discount: Number(data.discount) || 0,
-      quantity: Number(data.quantity),
-      properties: { arrSize: arrSize, arrColor: arrColor },
+      //   properties: { arrSize: arrSize, arrColor: arrColor },
       image: allImgs,
       callBack: () => {
         navigate(Epath.products);
-        toast.success("Thêm sản phẩm thành công !");
+        toast.success("Cập Nhật sản phẩm thành công !", { autoClose: 800 });
       },
     };
 
@@ -136,21 +165,29 @@ const AddProductPage = () => {
       return toast.error("Giá là trường bắt buộc", { autoClose: 800 });
     }
 
-    if (!dataForm.quantity) {
-      return toast.error("Số Lượng là trường bắt buộc", { autoClose: 800 });
-    }
-
     if (!dataForm?.image?.[0]) {
       return toast.error("Ảnh Chính là trường bắt buộc", { autoClose: 800 });
     }
 
-    console.log("🚀 ~ handleAddProductForm ~ dataForm:", dataForm);
+    console.log("🚀 ~ handleUpdateProductForm ~ dataForm:", dataForm);
 
-    dispatch(handleAddProduct(dataForm));
+    dispatch(handleUpdateProduct(dataForm));
   };
 
+  useEffect(() => {
+    setValue("name", dataDetailsProduct?.name);
+    setValue("price", dataDetailsProduct?.price);
+    setValue("discount", dataDetailsProduct?.discount);
+    setDescription(dataDetailsProduct?.description);
+    setBigImg(dataDetailsProduct?.image?.[0]?.url);
+    setIdCategory(dataDetailsProduct?.categoryId);
+    setArrSize(fillArrSize);
+    setArrColor(fillArrColor);
+    setSmallImgs(fillSmallImage);
+  }, [dataDetailsProduct, setValue]);
+
   return (
-    <form onSubmit={handleSubmit(handleAddProductForm)}>
+    <form onSubmit={handleSubmit(handleUpdateProductForm)}>
       <LayoutDetail title="Thêm Sản Phẩm">
         <div className="grid grid-cols-5 gap-x-5">
           <div className="col-span-3">
@@ -178,10 +215,11 @@ const AddProductPage = () => {
                         .localeCompare((optionB?.label ?? "").toLowerCase())
                     }
                     onSelect={(value) => setIdCategory(value)}
+                    value={idCategory}
                     options={optionCategory}
                   />
                 </BoxFiled>
-                <BoxFiled title="Biến Thể Sản Phẩm" require={false}>
+                {/* <BoxFiled title="Biến Thể Sản Phẩm" require={false}>
                   <div className="flex items-center gap-x-4">
                     <Select
                       mode="multiple"
@@ -190,6 +228,7 @@ const AddProductPage = () => {
                       }}
                       placeholder="Chọn size"
                       onChange={(value) => setArrSize([...value])}
+                      value={arrSize}
                       options={optionSize}
                     />
 
@@ -200,10 +239,11 @@ const AddProductPage = () => {
                       }}
                       placeholder="Chọn Màu Sắc"
                       onChange={(value) => setArrColor([...value])}
+                      value={arrColor}
                       options={optionColor}
                     />
                   </div>
-                </BoxFiled>
+                </BoxFiled> */}
                 <BoxFiled title="Mô Tả Sản Phẩm">
                   <ReactQuill
                     modules={modules}
@@ -264,12 +304,12 @@ const AddProductPage = () => {
                             className="w-[80px] h-[80px]"
                           />
 
-                          <button
+                          <div
                             onClick={() => removeImageUpload(index)}
-                            className="absolute top-[-20px] right-0 p-1 text-white rounded-full"
+                            className="absolute top-[-20px] right-0 p-1 text-white rounded-full cursor-pointer"
                           >
                             <CircleX color="#ccc" />
-                          </button>
+                          </div>
                         </div>
                       ))}
                     </div>
@@ -296,7 +336,7 @@ const AddProductPage = () => {
                     max="99"
                   ></Input>
                 </BoxFiled>
-                <BoxFiled title="Số Lượng">
+                {/* <BoxFiled title="Số Lượng">
                   <Input
                     control={control}
                     name="quantity"
@@ -304,7 +344,7 @@ const AddProductPage = () => {
                     placeholder="Số Lượng ..."
                     min="1"
                   ></Input>
-                </BoxFiled>
+                </BoxFiled> */}
               </Box>
             </div>
           </div>
@@ -322,7 +362,7 @@ const AddProductPage = () => {
             className="w-[200px] rounded-lg overflow-hidden hover:opacity-80"
             type="submit"
           >
-            Hoàn Thành
+            Cập Nhật
           </Button>
         </div>
       </LayoutDetail>
@@ -330,4 +370,4 @@ const AddProductPage = () => {
   );
 };
 
-export default AddProductPage;
+export default UpdateProductPage;

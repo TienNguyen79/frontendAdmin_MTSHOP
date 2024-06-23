@@ -16,7 +16,7 @@ import { handleLogout } from "../../../../store/user/handleUser";
 import { Epath } from "../../../routes/routerConfig";
 const items = [
   {
-    key: "dashboard",
+    key: "",
     label: "Trang Chủ",
     icon: <Home size={"18px"} />,
   },
@@ -30,33 +30,33 @@ const items = [
   },
 
   {
-    key: "product",
+    key: "products",
     label: "Sản Phẩm",
     icon: <Shirt size={"18px"} />,
-    children: [
-      {
-        key: "products",
-        label: "Danh Sách Sản Phẩm",
-      },
-      {
-        key: "6",
-        label: "Option 6",
-      },
-      {
-        key: "sub3",
-        label: "Submenu",
-        children: [
-          {
-            key: "7",
-            label: "Option 7",
-          },
-          {
-            key: "8",
-            label: "Option 8",
-          },
-        ],
-      },
-    ],
+    // children: [
+    //   {
+    //     key: "products",
+    //     label: "Danh Sách Sản Phẩm",
+    //   },
+    //   {
+    //     key: "6",
+    //     label: "Option 6",
+    //   },
+    //   {
+    //     key: "sub3",
+    //     label: "Submenu",
+    //     children: [
+    //       {
+    //         key: "7",
+    //         label: "Option 7",
+    //       },
+    //       {
+    //         key: "8",
+    //         label: "Option 8",
+    //       },
+    //     ],
+    //   },
+    // ],
   },
   {
     type: "divider",

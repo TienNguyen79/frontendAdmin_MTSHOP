@@ -4,6 +4,7 @@ import {
   handleGetAllColor,
   handleGetAllProduct,
   handleGetAllSize,
+  handleGetDetailsProduct,
 } from "./handleProduct";
 
 //Reducer Là các hàm xử lý các action và cập nhật trạng thái của ứng dụng.
@@ -12,6 +13,7 @@ export const setLoading = createAction("setLoading");
 // fullfiled | pending | rejected
 const initialState = {
   dataAllProduct: [],
+  dataDetailsProduct: {},
   dataAllSize: [],
   dataAllColor: [],
   loading: false,
@@ -39,6 +41,14 @@ const productSlice = createSlice({
       .addCase(handleGetAllProduct.rejected, (state, action) => {
         state.dataAllProduct = [];
         state.loadingSearchProduct = false;
+      })
+
+      //data Details Product
+      .addCase(handleGetDetailsProduct.fulfilled, (state, action) => {
+        state.dataDetailsProduct = action.payload;
+      })
+      .addCase(handleGetDetailsProduct.rejected, (state, action) => {
+        state.dataDetailsProduct = {};
       })
 
       //data get all size Product

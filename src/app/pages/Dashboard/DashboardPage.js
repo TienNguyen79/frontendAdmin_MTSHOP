@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import BoxOverviewItem from "../../modules/Dashboard/BoxOverviewItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -7,10 +7,19 @@ import {
   faSackDollar,
 } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { handleGetOverview } from "../../../store/user/handleUser";
 
 const DashboardPage = () => {
+  const dispatch = useDispatch();
+
   const { dataCurrentUser } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    dispatch(handleGetOverview());
+  }, []);
+
+  const { dataOverview } = useSelector((state) => state.user);
 
   return (
     <div className="">
@@ -37,29 +46,29 @@ const DashboardPage = () => {
           unit="VNĐ"
           icon={<FontAwesomeIcon icon={faSackDollar} size="2xl" />}
           colorIcon="text-[#ffb400]"
-          quantity={2000000}
-          to="/admin/order"
+          quantity={dataOverview?.revenue}
+          // to="/admin/order"
         ></BoxOverviewItem>
         <BoxOverviewItem
           title="Đơn Hàng"
           icon={<FontAwesomeIcon icon={faReceipt} size="2xl" />}
           colorIcon="text-[#16b1ff]"
-          quantity={60}
-          to="/admin/order"
+          quantity={dataOverview?.order}
+          // to="/admin/order"
         ></BoxOverviewItem>
         <BoxOverviewItem
           title="Khách Hàng"
-          quantity={70}
+          quantity={dataOverview?.user}
           icon={<FontAwesomeIcon icon={faUser} size="2xl" />}
           colorIcon="text-[#9055fd]"
-          to="/admin/customers"
+          // to="/admin/customers"
         ></BoxOverviewItem>
         <BoxOverviewItem
           title="Sản Phẩm"
-          quantity={90}
+          quantity={dataOverview?.product}
           icon={<FontAwesomeIcon icon={faBagShopping} size="2xl" />}
           colorIcon="text-[#20c997]"
-          to="/admin/products/product_list"
+          // to="/admin/products/product_list"
         ></BoxOverviewItem>
       </div>
     </div>

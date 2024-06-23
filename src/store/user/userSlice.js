@@ -3,6 +3,7 @@ import { createSlice, createAction } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import {
   handleGetCurrentUser,
+  handleGetOverview,
   handleGetUser,
   handleLoginAdmin,
   handleLogout,
@@ -15,6 +16,7 @@ export const setLoading = createAction("setLoading");
 const initialState = {
   dataUser: [],
   dataCurrentUser: {},
+  dataOverview: {},
   loading: false,
   errorMessage: "",
 };
@@ -58,6 +60,14 @@ const userSlice = createSlice({
       })
       .addCase(handleGetCurrentUser.rejected, (state, action) => {
         state.dataCurrentUser = null;
+      })
+
+      //overview
+      .addCase(handleGetOverview.fulfilled, (state, action) => {
+        state.dataOverview = action.payload;
+      })
+      .addCase(handleGetOverview.rejected, (state, action) => {
+        state.dataOverview = null;
       })
 
       //logout
