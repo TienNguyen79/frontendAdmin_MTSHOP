@@ -62,27 +62,27 @@ const items = [
     type: "divider",
   },
   {
-    key: "order",
+    key: "orders",
     label: "Đơn Hàng",
     icon: <Package size={"18px"} />,
-    children: [
-      {
-        key: "9",
-        label: "Option 9",
-      },
-      {
-        key: "10",
-        label: "Option 10",
-      },
-      {
-        key: "11",
-        label: "Option 11",
-      },
-      {
-        key: "12",
-        label: "Option 12",
-      },
-    ],
+    // children: [
+    //   {
+    //     key: "9",
+    //     label: "Option 9",
+    //   },
+    //   {
+    //     key: "10",
+    //     label: "Option 10",
+    //   },
+    //   {
+    //     key: "11",
+    //     label: "Option 11",
+    //   },
+    //   {
+    //     key: "12",
+    //     label: "Option 12",
+    //   },
+    // ],
   },
   {
     type: "divider",

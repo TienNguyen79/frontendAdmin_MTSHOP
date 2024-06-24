@@ -10,8 +10,6 @@ import Layout2 from "./components/Layout/Layout2";
 import { Epath } from "./routes/routerConfig";
 import AuthRoute from "./routes/AuthRoute";
 import { getTokenFromLocalStorage } from "../utils/localStorage";
-import UpdateProductPage from "./pages/Product/UpdateProductPage";
-import ProductDetailsPage from "./pages/Product/ProductDetailsPage";
 
 const TestPage2 = lazy(() => import("./pages/TestPage2"));
 const TestPage = lazy(() => import("./pages/TestPage"));
@@ -22,6 +20,13 @@ const CategoriesPage = lazy(() => import("./pages/Category/CategoriesPage"));
 const Layout = lazy(() => import("./components/Layout/Layout"));
 const AddProductPage = lazy(() => import("./pages/Product/AddProductPage"));
 const ProductsPage = lazy(() => import("./pages/Product/ProductsPage"));
+const OrderPage = lazy(() => import("./pages/Order/OrderPage"));
+const ProductDetailsPage = lazy(() =>
+  import("./pages/Product/ProductDetailsPage")
+);
+const UpdateProductPage = lazy(() =>
+  import("./pages/Product/UpdateProductPage")
+);
 const ActionCategoryPage = lazy(() =>
   import("./pages/Category/ActionCategoryPage")
 );
@@ -80,6 +85,11 @@ function App() {
             <Route
               path={Epath.productDetails}
               element={<ProductDetailsPage></ProductDetailsPage>}
+            ></Route>
+
+            <Route
+              path={Epath.orders}
+              element={<OrderPage></OrderPage>}
             ></Route>
           </Route>
           <Route path="*" element={<NotFoundPage></NotFoundPage>}></Route>

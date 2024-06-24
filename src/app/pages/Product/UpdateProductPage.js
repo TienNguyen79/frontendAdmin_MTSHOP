@@ -188,7 +188,7 @@ const UpdateProductPage = () => {
 
   return (
     <form onSubmit={handleSubmit(handleUpdateProductForm)}>
-      <LayoutDetail title="Thêm Sản Phẩm">
+      <LayoutDetail title="Cập Nhật Sản Phẩm">
         <div className="grid grid-cols-5 gap-x-5">
           <div className="col-span-3">
             <Box className="h-full">

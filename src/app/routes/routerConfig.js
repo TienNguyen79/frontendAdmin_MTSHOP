@@ -18,8 +18,10 @@ export const Epath = {
   products: "/products",
   addproduct: "/products/add",
   updateProduct: "/products/update/:id",
-
   productDetails: "/productDetails/:id",
+
+  //order
+  orders: "/orders",
 
   testPage: "/test",
   testPage2: "/test2",

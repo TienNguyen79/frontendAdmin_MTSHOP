@@ -166,7 +166,11 @@ const ProductsPage = () => {
   };
 
   return (
-    <LayoutDetail titleBtn="Thêm Sản Phẩm" url={Epath.addproduct}>
+    <LayoutDetail
+      title="Danh Sách Sản Phẩm"
+      titleBtn="Thêm Sản Phẩm"
+      url={Epath.addproduct}
+    >
       <div className="mb-4">
         <Input
           control={control}
