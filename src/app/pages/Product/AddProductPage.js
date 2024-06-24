@@ -263,7 +263,6 @@ const AddProductPage = () => {
                             setValue={setValue}
                             className="w-[80px] h-[80px]"
                           />
-
                           <div
                             onClick={() => removeImageUpload(index)}
                             className="absolute top-[-20px] right-0 p-1 text-white rounded-full cursor-pointer"
