@@ -34,13 +34,9 @@ const userSlice = createSlice({
       //case News
       .addCase(handleGetUser.fulfilled, (state, action) => {
         state.dataUser = action.payload;
-        state.loading = false;
-      })
-      .addCase(handleGetUser.pending, (state, action) => {
-        state.loading = true;
       })
       .addCase(handleGetUser.rejected, (state, action) => {
-        state.loading = false;
+        state.dataUser = [];
       })
 
       //login

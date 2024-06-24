@@ -1,8 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import requestGetUser, {
+  requestAddUser,
+  requestBanOrUnbanUser,
+  requestDeleteUser,
   requestGetCurrentUser,
   requestLogin,
   requestOverview,
+  requestUpdateUser,
   requestlogout,
 } from "./requestUser";
 import { OK } from "../../utils/httpStatus";
@@ -76,9 +80,68 @@ export const handleGetOverview = createAsyncThunk(
 
 export const handleGetUser = createAsyncThunk(
   "user/handleGetUser",
-  async (query, thunkAPI) => {
-    const response = await requestGetUser();
-    console.log("response", response);
-    return response.data;
+  async (data, thunkAPI) => {
+    try {
+      const response = await requestGetUser(data);
+      return response.data;
+    } catch (error) {
+      console.log("🚀 ~ error:", error);
+    }
+  }
+);
+
+export const handleAddUser = createAsyncThunk(
+  "user/handleAddUser",
+  async (data, thunkAPI) => {
+    try {
+      const response = await requestAddUser(data);
+      if (response.status === 200) {
+        data?.callBack?.();
+      }
+    } catch (error) {
+      console.log("🚀 ~ error:", error);
+    }
+  }
+);
+
+export const handleUpdateUser = createAsyncThunk(
+  "user/handleUpdateUser",
+  async (data, thunkAPI) => {
+    try {
+      const response = await requestUpdateUser(data);
+      if (response.status === 200) {
+        data?.callBack?.();
+      }
+    } catch (error) {
+      console.log("🚀 ~ error:", error);
+    }
+  }
+);
+
+export const handleBanOrUnBanUser = createAsyncThunk(
+  "user/handleBanOrUnBanUser",
+  async (data, thunkAPI) => {
+    try {
+      const response = await requestBanOrUnbanUser(data);
+      if (response.status === 200) {
+        data?.callBack?.();
+      }
+    } catch (error) {
+      console.log("🚀 ~ error:", error);
+    }
+  }
+);
+
+export const handleDeleteUser = createAsyncThunk(
+  "user/handleDeleteUser",
+  async (data, thunkAPI) => {
+    try {
+      const response = await requestDeleteUser(data);
+      if (response.status === 200) {
+        data?.callBack?.();
+      }
+    } catch (error) {
+      console.log("🚀 ~ error:", error);
+    }
   }
 );

@@ -17,6 +17,27 @@ export function requestGetCurrentUser() {
   return axiosClient.get(`/currentUser`);
 }
 
-export default function requestGetUser() {
-  return axiosClient.get(`/users`);
+export default function requestGetUser(data) {
+  const limit = data?.limit || 10;
+  const page = data?.page || 1;
+  const name = data?.name;
+
+  const queryName = name ? `&name=${name}` : "";
+  return axiosClient.get(`/users?limit=${limit}&page=${page}${queryName}`);
+}
+
+export function requestAddUser(data) {
+  return axiosClient.post(`/user`, data);
+}
+
+export function requestUpdateUser(data) {
+  return axiosClient.put(`/user`, data);
+}
+
+export function requestBanOrUnbanUser(data) {
+  return axiosClient.put(`/ban-or-unBan-User/${data.id}`);
+}
+
+export function requestDeleteUser(data) {
+  return axiosClient.delete(`/user/${data.id}`);
 }
