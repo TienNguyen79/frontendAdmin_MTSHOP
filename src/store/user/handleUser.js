@@ -99,7 +99,7 @@ export const handleAddUser = createAsyncThunk(
         data?.callBack?.();
       }
     } catch (error) {
-      console.log("🚀 ~ error:", error);
+      toast.error(error.response.data.ms, { autoClose: 900 });
     }
   }
 );
@@ -113,7 +113,7 @@ export const handleUpdateUser = createAsyncThunk(
         data?.callBack?.();
       }
     } catch (error) {
-      console.log("🚀 ~ error:", error);
+      toast.error(error.response.data.ms, { autoClose: 900 });
     }
   }
 );
@@ -127,7 +127,7 @@ export const handleBanOrUnBanUser = createAsyncThunk(
         data?.callBack?.();
       }
     } catch (error) {
-      console.log("🚀 ~ error:", error);
+      toast.error(error.response.data.ms, { autoClose: 900 });
     }
   }
 );
@@ -141,7 +141,7 @@ export const handleDeleteUser = createAsyncThunk(
         data?.callBack?.();
       }
     } catch (error) {
-      console.log("🚀 ~ error:", error);
+      toast.error(error.response.data.ms, { autoClose: 900 });
     }
   }
 );

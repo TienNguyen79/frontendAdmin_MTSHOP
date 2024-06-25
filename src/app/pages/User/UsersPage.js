@@ -65,9 +65,15 @@ const UsersPage = () => {
       dataIndex: "role",
       key: "role",
       render: (role) => (
-        <div className="flex items-center gap-x-1">
-          <span className="text-text1 font-medium"> {role} </span>
-        </div>
+        <>
+          {role === statusRole.ADMIN ? (
+            <Tag color="gold">Quản Trị Viên</Tag>
+          ) : role === statusRole.USER ? (
+            <Tag color="cyan">Người Dùng</Tag>
+          ) : (
+            ""
+          )}
+        </>
       ),
     },
 
@@ -86,8 +92,6 @@ const UsersPage = () => {
       title: "Hành Động",
       key: "action",
       render: ({ action }) => {
-        console.log("🚀 ~ UsersPage ~ record:", action);
-
         return (
           <div
             className={`flex items-center gap-x-3 
@@ -137,14 +141,7 @@ const UsersPage = () => {
           item.avatar ||
           "https://drallen.com.vn/wp-content/uploads/2023/09/chup-anh-di-bien.jpg",
       },
-      role:
-        item.roleID === statusRole.ADMIN ? (
-          <Tag color="gold">Quản Trị Viên</Tag>
-        ) : item.roleID === statusRole.USER ? (
-          <Tag color="cyan">Người Dùng</Tag>
-        ) : (
-          ""
-        ),
+      role: item.roleID,
       status:
         item.status === statusUser.BAN ? (
           <Tag color="red">Bị Cấm</Tag>
