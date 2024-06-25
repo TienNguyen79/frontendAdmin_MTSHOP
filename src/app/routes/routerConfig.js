@@ -20,6 +20,12 @@ export const Epath = {
   updateProduct: "/products/update/:id",
   productDetails: "/productDetails/:id",
 
+  //user
+
+  users: "/users",
+  addUser: "/users/add",
+  updateUser: "/users/update/:id",
+
   //order
   orders: "/orders",
 

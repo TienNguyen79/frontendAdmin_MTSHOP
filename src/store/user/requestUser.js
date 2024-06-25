@@ -23,7 +23,7 @@ export default function requestGetUser(data) {
   const name = data?.name;
 
   const queryName = name ? `&name=${name}` : "";
-  return axiosClient.get(`/users?limit=${limit}&page=${page}${queryName}`);
+  return axiosClient.get(`/user?limit=${limit}&page=${page}${queryName}`);
 }
 
 export function requestAddUser(data) {

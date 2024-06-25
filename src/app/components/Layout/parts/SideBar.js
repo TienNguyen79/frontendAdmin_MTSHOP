@@ -88,7 +88,7 @@ const items = [
     type: "divider",
   },
   {
-    key: "user",
+    key: "users",
     label: "Người Dùng",
     icon: <User size={"18px"} />,
   },

@@ -10,6 +10,8 @@ import Layout2 from "./components/Layout/Layout2";
 import { Epath } from "./routes/routerConfig";
 import AuthRoute from "./routes/AuthRoute";
 import { getTokenFromLocalStorage } from "../utils/localStorage";
+import UsersPage from "./pages/User/UsersPage";
+import ActionUserPage from "./pages/User/ActionUserPage";
 
 const TestPage2 = lazy(() => import("./pages/TestPage2"));
 const TestPage = lazy(() => import("./pages/TestPage"));
@@ -90,6 +92,16 @@ function App() {
             <Route
               path={Epath.orders}
               element={<OrderPage></OrderPage>}
+            ></Route>
+
+            <Route path={Epath.users} element={<UsersPage></UsersPage>}></Route>
+            <Route
+              path={Epath.addUser}
+              element={<ActionUserPage></ActionUserPage>}
+            ></Route>
+            <Route
+              path={Epath.updateUser}
+              element={<ActionUserPage></ActionUserPage>}
             ></Route>
           </Route>
           <Route path="*" element={<NotFoundPage></NotFoundPage>}></Route>
