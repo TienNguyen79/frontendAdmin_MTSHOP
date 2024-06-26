@@ -34,6 +34,11 @@ const UsersPage = () => {
   }, [currentPage, dispatch, name, pageSize]);
 
   const { dataUser } = useSelector((state) => state.user);
+  const { dataCurrentUser } = useSelector((state) => state.user);
+
+  const dataUser2 =
+    dataUser?.results?.length > 0 &&
+    dataUser?.results?.filter((item) => item.id !== dataCurrentUser.id);
 
   const columns = [
     {
@@ -82,9 +87,15 @@ const UsersPage = () => {
       dataIndex: "status",
       key: "status",
       render: (status) => (
-        <div className="flex items-center gap-x-1">
-          <span className="text-text1 font-medium"> {status} </span>
-        </div>
+        <>
+          {status.status === statusUser.BAN ? (
+            <Tag color="red">Bị Cấm</Tag>
+          ) : status.status === statusUser.NORMAL ? (
+            <Tag color="blue">Bình thường</Tag>
+          ) : (
+            ""
+          )}
+        </>
       ),
     },
 
@@ -109,14 +120,14 @@ const UsersPage = () => {
             {action.status === statusUser.BAN ? (
               <span
                 className="cursor-pointer hover:text-green-400 transition-all"
-                onClick={handleUnBanUser}
+                onClick={() => handleUnBanUser(action.id)}
               >
                 <Star size={"20px"} />
               </span>
             ) : action.status === statusUser.NORMAL ? (
               <span
                 className="cursor-pointer hover:text-error transition-all"
-                onClick={handleBanUser}
+                onClick={() => handleBanUser(action.id)}
               >
                 <Ban size={"20px"} />
               </span>
@@ -130,8 +141,8 @@ const UsersPage = () => {
   ];
 
   const data =
-    dataUser?.results?.length > 0 &&
-    dataUser?.results?.map((item) => ({
+    dataUser2?.length > 0 &&
+    dataUser2.map((item) => ({
       key: item.id,
       id: item.id,
       info: {
@@ -142,14 +153,7 @@ const UsersPage = () => {
           "https://drallen.com.vn/wp-content/uploads/2023/09/chup-anh-di-bien.jpg",
       },
       role: item.roleID,
-      status:
-        item.status === statusUser.BAN ? (
-          <Tag color="red">Bị Cấm</Tag>
-        ) : item.status === statusUser.NORMAL ? (
-          <Tag color="blue">Bình thường</Tag>
-        ) : (
-          ""
-        ),
+      status: item,
       action: { id: item.id, status: item.status },
     }));
 
@@ -165,9 +169,9 @@ const UsersPage = () => {
     debouncedChangeHandler(e.target.value);
   };
 
-  const handleUnBanUser = () => {
+  const handleUnBanUser = (id) => {
     Swal.fire({
-      title: `Bạn muốn Bỏ cấm người dùng  ?`,
+      title: `Bạn muốn Bỏ cấm người dùng #${id} ?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -180,9 +184,9 @@ const UsersPage = () => {
     });
   };
 
-  const handleBanUser = () => {
+  const handleBanUser = (id) => {
     Swal.fire({
-      title: `Bạn muốn  cấm người dùng ?`,
+      title: `Bạn muốn  cấm người dùng #${id}  ?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -218,10 +222,10 @@ const UsersPage = () => {
         dataSource={data}
         className="text-text1 font-semibold text-[16px]"
         pagination={
-          dataUser.totalPages > 1
+          dataUser?.totalPages > 1
             ? {
                 current: currentPage || 1,
-                total: dataUser.totalResults,
+                total: dataUser?.totalResults,
                 pageSize: pageSize,
                 onChange: (page, pageSize) => {
                   setCurrentPage(page);

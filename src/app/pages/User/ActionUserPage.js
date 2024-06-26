@@ -60,6 +60,7 @@ const ActionUserPage = () => {
       const dataform = {
         ...data,
         roleID: valueRole,
+        idUser: id,
         callBack: () => {
           toast.success("Cập Nhật Thành Công !", { autoClose: 800 });
           navigate(Epath.users);
