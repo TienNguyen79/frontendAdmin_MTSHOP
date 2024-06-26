@@ -12,7 +12,10 @@ import {
 import { Table, Tag } from "antd";
 import Image from "../../components/Image/Image";
 import { useDispatch, useSelector } from "react-redux";
-import { handleGetUser } from "../../../store/user/handleUser";
+import {
+  handleBanOrUnBanUser,
+  handleGetUser,
+} from "../../../store/user/handleUser";
 import { statusRole, statusUser } from "../../../utils/commom";
 import { useForm } from "react-hook-form";
 import Input from "../../components/Input/Input";
@@ -180,13 +183,22 @@ const UsersPage = () => {
       cancelButtonText: "Hủy Bỏ",
     }).then((result) => {
       if (result.isConfirmed) {
+        dispatch(
+          handleBanOrUnBanUser({
+            id: id,
+            callBack: () => {
+              dispatch(handleGetUser());
+              Swal.fire(`Người dùng #${id} đã được bỏ cấm!`, "", "success");
+            },
+          })
+        );
       }
     });
   };
 
   const handleBanUser = (id) => {
     Swal.fire({
-      title: `Bạn muốn  cấm người dùng #${id}  ?`,
+      title: `Bạn muốn cấm người dùng #${id}  ?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -195,6 +207,15 @@ const UsersPage = () => {
       cancelButtonText: "Hủy Bỏ",
     }).then((result) => {
       if (result.isConfirmed) {
+        dispatch(
+          handleBanOrUnBanUser({
+            id: id,
+            callBack: () => {
+              dispatch(handleGetUser());
+              Swal.fire(`Người dùng #${id} đã bị cấm!`, "", "success");
+            },
+          })
+        );
       }
     });
   };
