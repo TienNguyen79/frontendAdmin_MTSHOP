@@ -9,11 +9,13 @@ import {
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { handleGetOverview } from "../../../store/user/handleUser";
+import { statusRole } from "../../../utils/commom";
 
 const DashboardPage = () => {
   const dispatch = useDispatch();
 
   const { dataCurrentUser } = useSelector((state) => state.user);
+  console.log("🚀 ~ DashboardPage ~ dataCurrentUser:", dataCurrentUser);
 
   useEffect(() => {
     dispatch(handleGetOverview());
@@ -41,14 +43,16 @@ const DashboardPage = () => {
         </div>
       </div>
       <div className="mt-10 grid grid-cols-4 gap-x-4">
-        <BoxOverviewItem
-          title="Doanh Thu"
-          unit="VNĐ"
-          icon={<FontAwesomeIcon icon={faSackDollar} size="2xl" />}
-          colorIcon="text-[#ffb400]"
-          quantity={dataOverview?.revenue}
-          // to="/admin/order"
-        ></BoxOverviewItem>
+        {dataCurrentUser?.roleID === statusRole.ADMIN && (
+          <BoxOverviewItem
+            title="Doanh Thu"
+            unit="VNĐ"
+            icon={<FontAwesomeIcon icon={faSackDollar} size="2xl" />}
+            colorIcon="text-[#ffb400]"
+            quantity={dataOverview?.revenue}
+            // to="/admin/order"
+          ></BoxOverviewItem>
+        )}
         <BoxOverviewItem
           title="Đơn Hàng"
           icon={<FontAwesomeIcon icon={faReceipt} size="2xl" />}

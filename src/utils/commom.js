@@ -9,6 +9,7 @@ export const LIMIT_HIGH = 999999;
 export const statusRole = {
   USER: 1,
   ADMIN: 2,
+  STAFF: 3,
 };
 
 export const statusUser = {

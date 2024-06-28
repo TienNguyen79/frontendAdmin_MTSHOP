@@ -40,6 +40,7 @@ const ActionUserPage = () => {
   }, [dispatch]);
 
   const dataUser = useSelector((state) => state.user.dataUser.results);
+  const { dataCurrentUser } = useSelector((state) => state.user);
 
   const dataDetailsUser =
     dataUser?.length > 0 && dataUser?.find((item) => item.id === Number(id));
@@ -78,6 +79,12 @@ const ActionUserPage = () => {
       setValueRole(dataDetailsUser?.roleID);
     }
   }, [dataDetailsUser]);
+
+  useEffect(() => {
+    if (dataCurrentUser.roleID === statusRole.STAFF) {
+      navigate("/");
+    }
+  }, [dataCurrentUser.roleID, navigate]);
 
   return (
     <div>
@@ -151,6 +158,7 @@ const ActionUserPage = () => {
                   value={valueRole}
                 >
                   <Radio value={statusRole.USER}>Người Dùng</Radio>
+                  <Radio value={statusRole.STAFF}>Nhân Viên</Radio>
                   <Radio value={statusRole.ADMIN}>Quản trị viên</Radio>
                 </Radio.Group>
               </BoxFiled>

@@ -67,6 +67,12 @@ const UsersPage = () => {
         </div>
       ),
     },
+    {
+      title: "Số điện thoại",
+      dataIndex: "phoneNumber",
+      key: "phoneNumber",
+      render: (phoneNumber) => <h1>{phoneNumber}</h1>,
+    },
 
     {
       title: "Vai trò",
@@ -78,6 +84,8 @@ const UsersPage = () => {
             <Tag color="gold">Quản Trị Viên</Tag>
           ) : role === statusRole.USER ? (
             <Tag color="cyan">Người Dùng</Tag>
+          ) : role === statusRole.STAFF ? (
+            <Tag color="lime">Nhân Viên</Tag>
           ) : (
             ""
           )}
@@ -155,6 +163,7 @@ const UsersPage = () => {
           item.avatar ||
           "https://drallen.com.vn/wp-content/uploads/2023/09/chup-anh-di-bien.jpg",
       },
+      phoneNumber: item.phoneNumber,
       role: item.roleID,
       status: item,
       action: { id: item.id, status: item.status },
@@ -219,6 +228,12 @@ const UsersPage = () => {
       }
     });
   };
+
+  useEffect(() => {
+    if (dataCurrentUser.roleID === statusRole.STAFF) {
+      navigate("/");
+    }
+  }, [dataCurrentUser.roleID, navigate]);
 
   return (
     <LayoutDetail

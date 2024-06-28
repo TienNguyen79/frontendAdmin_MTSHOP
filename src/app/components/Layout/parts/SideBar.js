@@ -10,109 +10,117 @@ import {
   User,
 } from "lucide-react";
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { handleLogout } from "../../../../store/user/handleUser";
 import { Epath } from "../../../routes/routerConfig";
-const items = [
-  {
-    key: "",
-    label: "Trang Chủ",
-    icon: <Home size={"18px"} />,
-  },
-  {
-    type: "divider",
-  },
-  {
-    key: "categories",
-    label: "Danh Mục",
-    icon: <BookMinus size={"18px"} />,
-  },
+import { statusRole } from "../../../../utils/commom";
 
-  {
-    key: "products",
-    label: "Sản Phẩm",
-    icon: <Shirt size={"18px"} />,
-    // children: [
-    //   {
-    //     key: "products",
-    //     label: "Danh Sách Sản Phẩm",
-    //   },
-    //   {
-    //     key: "6",
-    //     label: "Option 6",
-    //   },
-    //   {
-    //     key: "sub3",
-    //     label: "Submenu",
-    //     children: [
-    //       {
-    //         key: "7",
-    //         label: "Option 7",
-    //       },
-    //       {
-    //         key: "8",
-    //         label: "Option 8",
-    //       },
-    //     ],
-    //   },
-    // ],
-  },
-  {
-    type: "divider",
-  },
-  {
-    key: "orders",
-    label: "Đơn Hàng",
-    icon: <Package size={"18px"} />,
-    // children: [
-    //   {
-    //     key: "9",
-    //     label: "Option 9",
-    //   },
-    //   {
-    //     key: "10",
-    //     label: "Option 10",
-    //   },
-    //   {
-    //     key: "11",
-    //     label: "Option 11",
-    //   },
-    //   {
-    //     key: "12",
-    //     label: "Option 12",
-    //   },
-    // ],
-  },
-  {
-    type: "divider",
-  },
-  {
-    key: "users",
-    label: "Người Dùng",
-    icon: <User size={"18px"} />,
-  },
-  {
-    key: "grp",
-    label: "Group",
-    type: "group",
-    children: [
-      {
-        key: "settings",
-        label: "Cài Đặt",
-        icon: <Settings size={"18px"} />,
-      },
-      {
-        key: "logout",
-        label: "Đăng Xuất",
-        icon: <LogOut size={"18px"} />,
-      },
-    ],
-  },
-];
 const SideBar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { dataCurrentUser } = useSelector((state) => state.user);
+
+  const items = [
+    {
+      key: "",
+      label: "Trang Chủ",
+      icon: <Home size={"18px"} />,
+    },
+    {
+      type: "divider",
+    },
+    {
+      key: "categories",
+      label: "Danh Mục",
+      icon: <BookMinus size={"18px"} />,
+    },
+
+    {
+      key: "products",
+      label: "Sản Phẩm",
+      icon: <Shirt size={"18px"} />,
+      // children: [
+      //   {
+      //     key: "products",
+      //     label: "Danh Sách Sản Phẩm",
+      //   },
+      //   {
+      //     key: "6",
+      //     label: "Option 6",
+      //   },
+      //   {
+      //     key: "sub3",
+      //     label: "Submenu",
+      //     children: [
+      //       {
+      //         key: "7",
+      //         label: "Option 7",
+      //       },
+      //       {
+      //         key: "8",
+      //         label: "Option 8",
+      //       },
+      //     ],
+      //   },
+      // ],
+    },
+    {
+      type: "divider",
+    },
+    {
+      key: "orders",
+      label: "Đơn Hàng",
+      icon: <Package size={"18px"} />,
+      // children: [
+      //   {
+      //     key: "9",
+      //     label: "Option 9",
+      //   },
+      //   {
+      //     key: "10",
+      //     label: "Option 10",
+      //   },
+      //   {
+      //     key: "11",
+      //     label: "Option 11",
+      //   },
+      //   {
+      //     key: "12",
+      //     label: "Option 12",
+      //   },
+      // ],
+    },
+    {
+      type: "divider",
+    },
+    {
+      key: "users",
+      label: "Người Dùng",
+      icon: <User size={"18px"} />,
+      className: ` ${
+        dataCurrentUser?.roleID === statusRole.STAFF && "!hidden"
+      } `,
+    },
+    {
+      key: "grp",
+      label: "Group",
+      type: "group",
+      children: [
+        {
+          key: "settings",
+          label: "Cài Đặt",
+          icon: <Settings size={"18px"} />,
+        },
+        {
+          key: "logout",
+          label: "Đăng Xuất",
+          icon: <LogOut size={"18px"} />,
+        },
+      ],
+    },
+  ];
+
   const onClick = (e) => {
     const { key } = e;
 
