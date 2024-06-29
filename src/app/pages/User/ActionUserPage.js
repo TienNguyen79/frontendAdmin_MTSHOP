@@ -126,6 +126,17 @@ const ActionUserPage = () => {
                 ></Input>
               </BoxFiled>
 
+              {!id && (
+                <BoxFiled title="Mật Khẩu " className="w-full">
+                  <Input
+                    control={control}
+                    name="password"
+                    placeholder="Mật Khẩu ..."
+                    type="password"
+                  ></Input>
+                </BoxFiled>
+              )}
+
               {/* <BoxFiled
                 title="Mật Khẩu Hiện Tại "
                 className="w-full"

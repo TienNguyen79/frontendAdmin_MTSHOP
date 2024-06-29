@@ -96,14 +96,17 @@ const ProductsPage = () => {
     {
       title: "Hành Động",
       key: "action",
-      render: ({ id }) => (
+      render: ({ action }) => (
         <div className="flex items-center gap-x-3">
-          <Link
-            to={`/products/update/${id}`}
-            className="cursor-pointer hover:text-primary transition-all"
-          >
-            <FilePenLine size={"20px"} />
-          </Link>
+          {!action?.deletedAt && (
+            <Link
+              to={`/products/update/${action?.id}`}
+              className="cursor-pointer hover:text-primary transition-all"
+            >
+              <FilePenLine size={"20px"} />
+            </Link>
+          )}
+          {/* <h1>{status?.deletedAt}</h1> */}
           {/* <span className="cursor-pointer hover:text-error transition-all">
             <Trash size={"20px"} />
           </span> */}
@@ -124,7 +127,7 @@ const ProductsPage = () => {
           },
           price: pro?.total,
           sold: pro?.sold,
-          action: pro.id,
+          action: pro,
           status: pro,
         }))
       : [];
