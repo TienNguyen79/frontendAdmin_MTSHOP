@@ -35,8 +35,6 @@ const LoginPage = () => {
   });
 
   const handleLoginForm = (data) => {
-    console.log("🚀 ~ handleLoginForm ~ data:", data);
-
     dispatch(
       handleLoginAdmin({ ...data, callback: () => navigate(Epath.dashboard) })
     );

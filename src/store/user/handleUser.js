@@ -6,6 +6,7 @@ import requestGetUser, {
   requestGetCurrentUser,
   requestLogin,
   requestOverview,
+  requestUpdateInfoUser,
   requestUpdateUser,
   requestlogout,
 } from "./requestUser";
@@ -142,6 +143,23 @@ export const handleDeleteUser = createAsyncThunk(
       }
     } catch (error) {
       toast.error(error.response.data.ms, { autoClose: 900 });
+    }
+  }
+);
+
+export const handleUpdateInfoUser = createAsyncThunk(
+  "user/handleUpdateInfoUser",
+  async (data, thunkAPI) => {
+    try {
+      const response = await requestUpdateInfoUser(data);
+
+      if (response.status === OK) {
+        toast.success("Cập nhật thành công", { autoClose: 800 });
+        thunkAPI.dispatch(handleGetCurrentUser());
+      }
+    } catch (error) {
+      toast.error(error?.response?.data?.ms, { autoClose: 800 });
+      console.log("🚀 ~ error:", error);
     }
   }
 );

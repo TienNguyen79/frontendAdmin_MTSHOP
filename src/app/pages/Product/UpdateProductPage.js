@@ -169,8 +169,6 @@ const UpdateProductPage = () => {
       return toast.error("Ảnh Chính là trường bắt buộc", { autoClose: 800 });
     }
 
-    console.log("🚀 ~ handleUpdateProductForm ~ dataForm:", dataForm);
-
     dispatch(handleUpdateProduct(dataForm));
   };
 

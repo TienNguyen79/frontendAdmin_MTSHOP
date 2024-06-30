@@ -15,7 +15,6 @@ const DashboardPage = () => {
   const dispatch = useDispatch();
 
   const { dataCurrentUser } = useSelector((state) => state.user);
-  console.log("🚀 ~ DashboardPage ~ dataCurrentUser:", dataCurrentUser);
 
   useEffect(() => {
     dispatch(handleGetOverview());

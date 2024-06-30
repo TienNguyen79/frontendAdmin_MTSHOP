@@ -22,14 +22,14 @@ import BoxFiled from "../../components/Commom/BoxFiled";
 
 const ProductDetailsPage = () => {
   const dispatch = useDispatch();
-  const { control } = useForm();
+  const { control, setValue } = useForm();
   const { id } = useParams();
   const paramsTemp = useParams();
 
   const [idSize, setIdSize] = useState();
   const [idColor, setIdColor] = useState();
   const [quantity, setQuantity] = useState();
-  console.log("🚀 ~ ProductDetailsPage ~ quantity:", quantity);
+  const [idProductVariant, setIdProductVariant] = useState();
 
   useEffect(() => {
     dispatch(handleGetAllSize({ type: "size" }));
@@ -54,8 +54,18 @@ const ProductDetailsPage = () => {
     }));
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen2, setIsModalOpen2] = useState(false);
   const showModal = () => {
     setIsModalOpen(true);
+  };
+
+  const showModal2 = (record) => {
+    setIdSize(record?.size?.id || null);
+    setIdColor(record?.color?.id || null);
+    setValue("quantity", record?.quantity);
+    setQuantity(record?.quantity);
+    setIdProductVariant(record?.id);
+    setIsModalOpen2(true);
   };
   const handleOk = () => {
     const dataForm = {
@@ -73,8 +83,29 @@ const ProductDetailsPage = () => {
 
     // setIsModalOpen(false);
   };
+
+  const handleOk2 = () => {
+    const updatedQuantityData = {
+      id: idProductVariant,
+      idSize: idSize,
+      idColor: idColor,
+      quantity: quantity,
+      idProduct: id,
+      callBack: () => {
+        toast.success("Cập nhật số lượng thành công", { autoClose: 800 });
+        dispatch(handleGetDetailsProduct(paramsTemp?.id));
+        handleCancel2();
+      },
+    };
+    dispatch(handleUpdateQuantityProductDetails(updatedQuantityData));
+  };
   const handleCancel = () => {
     setIsModalOpen(false);
+  };
+
+  const handleCancel2 = () => {
+    setIsModalOpen2(false);
+    setValue("quantity", undefined);
   };
 
   useEffect(() => {
@@ -86,7 +117,6 @@ const ProductDetailsPage = () => {
   );
 
   const [editStates, setEditStates] = useState({});
-  console.log("🚀 ~ ProductDetailsPage ~ editStates:", editStates);
   const [editValues, setEditValues] = useState({});
 
   const toggleEdit = (id) => {
@@ -194,22 +224,13 @@ const ProductDetailsPage = () => {
       key: "action",
       render: (record) => (
         <div className="flex items-center gap-x-3">
-          {!editStates[record.id] ? (
-            <div
-              className="cursor-pointer hover:text-primary transition-all"
-              onClick={() => toggleEdit(record.id)}
-            >
-              <FilePenLine size={"20px"} />
-            </div>
-          ) : (
-            <div
-              className="cursor-pointer hover:text-primary transition-all"
-              onClick={() => saveEdit(record)}
-            >
-              {" "}
-              <Save size={"20px"} />
-            </div>
-          )}
+          <div
+            className="cursor-pointer hover:text-primary transition-all"
+            onClick={() => showModal2(record)}
+          >
+            <FilePenLine size={"20px"} />
+          </div>
+
           <span className="cursor-pointer hover:text-error transition-all">
             <Trash
               size={"20px"}
@@ -273,6 +294,59 @@ const ProductDetailsPage = () => {
                     width: "100%",
                   }}
                   placeholder="Chọn Màu Sắc"
+                  onChange={(value) => setIdColor(value)}
+                  options={optionColor}
+                />
+              </BoxFiled>
+            </div>
+
+            <BoxFiled require={false} title="Số Lượng">
+              <Input
+                control={control}
+                name="quantity"
+                placeholder="Số Lượng ..."
+                className="!py-2"
+                type="number"
+                min="1"
+                onChange={(e) => setQuantity(Number(e.target.value))}
+              ></Input>
+            </BoxFiled>
+          </div>
+        </div>
+      </Modal>
+
+      <Modal
+        title="Cập nhật thuộc tính"
+        open={isModalOpen2}
+        onOk={handleOk2}
+        onCancel={handleCancel2}
+        okText="Cập Nhật"
+        cancelText="Hủy Bỏ"
+      >
+        <div className="mt-5">
+          <div className="">
+            <BoxFiled require={false} title="Size">
+              <Select
+                // mode="multiple"
+                style={{
+                  width: "100%",
+                }}
+                placeholder="Chọn size"
+                value={idSize}
+                onChange={(value) => setIdSize(value)}
+                options={optionSize}
+              />
+            </BoxFiled>
+
+            <div className="my-5">
+              <BoxFiled require={false} title="Màu Sắc">
+                <Select
+                  // mode="multiple"
+                  style={{
+                    width: "100%",
+                  }}
+                  placeholder="Chọn Màu Sắc"
+                  value={idColor}
                   onChange={(value) => setIdColor(value)}
                   options={optionColor}
                 />

@@ -118,7 +118,6 @@ const OrderPage = () => {
       title: "Hành Động",
       key: "action",
       render: ({ id, status }) => {
-        console.log(status);
         return (
           <div
             className={`flex items-center gap-x-3 ${

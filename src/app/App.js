@@ -12,6 +12,7 @@ import AuthRoute from "./routes/AuthRoute";
 import { getTokenFromLocalStorage } from "../utils/localStorage";
 import UsersPage from "./pages/User/UsersPage";
 import ActionUserPage from "./pages/User/ActionUserPage";
+import SettingsUserPage from "./pages/User/SettingsUserPage";
 
 const TestPage2 = lazy(() => import("./pages/TestPage2"));
 const TestPage = lazy(() => import("./pages/TestPage"));
@@ -102,6 +103,10 @@ function App() {
             <Route
               path={Epath.updateUser}
               element={<ActionUserPage></ActionUserPage>}
+            ></Route>
+            <Route
+              path={Epath.settingUser}
+              element={<SettingsUserPage></SettingsUserPage>}
             ></Route>
           </Route>
           <Route path="*" element={<NotFoundPage></NotFoundPage>}></Route>

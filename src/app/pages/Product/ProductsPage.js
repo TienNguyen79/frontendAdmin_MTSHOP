@@ -24,7 +24,6 @@ const ProductsPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [namePro, setNamePro] = useState("");
-  console.log("🚀 ~ ProductsPage ~ namePro:", namePro);
   useEffect(() => {
     dispatch(
       handleGetAllProduct({ limit: pageSize, page: currentPage, name: namePro })
@@ -145,8 +144,6 @@ const ProductsPage = () => {
   };
 
   const onChangeStatus = (checked, id) => {
-    console.log("🚀 ~ onChangeStatus ~ checked:", checked);
-    console.log("🚀 ~ onChangeStatus ~ id:", id);
     if (checked) {
       dispatch(
         handleRestoreProduct({

@@ -65,9 +65,6 @@ const CategoriesPage = () => {
       dataIndex: "action",
       key: "action",
       render: (cate) => {
-        console.log("🚀 ~ CategoriesPage ~ cate:", cate);
-        // console.log("🚀 ~ CategoriesPage ~ cateChild:", cateChild);
-
         return (
           <div className="flex gap-x-5">
             <Link

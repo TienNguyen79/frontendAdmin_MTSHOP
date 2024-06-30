@@ -41,3 +41,7 @@ export function requestBanOrUnbanUser(data) {
 export function requestDeleteUser(data) {
   return axiosClient.delete(`/user/${data.id}`);
 }
+
+export function requestUpdateInfoUser(data) {
+  return axiosClient.put(`/user`, data);
+}

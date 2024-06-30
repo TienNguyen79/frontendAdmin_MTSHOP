@@ -108,7 +108,7 @@ const SideBar = () => {
       type: "group",
       children: [
         {
-          key: "settings",
+          key: "setttings",
           label: "Cài Đặt",
           icon: <Settings size={"18px"} />,
         },

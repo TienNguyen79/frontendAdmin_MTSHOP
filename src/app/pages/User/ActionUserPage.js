@@ -44,7 +44,6 @@ const ActionUserPage = () => {
 
   const dataDetailsUser =
     dataUser?.length > 0 && dataUser?.find((item) => item.id === Number(id));
-  console.log("🚀 ~ ActionUserPage ~ dataDetailsUser:", dataDetailsUser);
 
   const handleActionUser = (data) => {
     if (!id) {

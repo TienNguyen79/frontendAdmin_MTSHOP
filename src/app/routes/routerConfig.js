@@ -25,6 +25,7 @@ export const Epath = {
   users: "/users",
   addUser: "/users/add",
   updateUser: "/users/update/:id",
+  settingUser: "/setttings",
 
   //order
   orders: "/orders",
