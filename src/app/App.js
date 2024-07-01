@@ -13,6 +13,8 @@ import { getTokenFromLocalStorage } from "../utils/localStorage";
 import UsersPage from "./pages/User/UsersPage";
 import ActionUserPage from "./pages/User/ActionUserPage";
 import SettingsUserPage from "./pages/User/SettingsUserPage";
+import NewsPage from "./pages/News/NewsPage";
+import ActionNews from "./pages/News/ActionNews";
 
 const TestPage2 = lazy(() => import("./pages/TestPage2"));
 const TestPage = lazy(() => import("./pages/TestPage"));
@@ -107,6 +109,16 @@ function App() {
             <Route
               path={Epath.settingUser}
               element={<SettingsUserPage></SettingsUserPage>}
+            ></Route>
+
+            <Route path={Epath.news} element={<NewsPage></NewsPage>}></Route>
+            <Route
+              path={Epath.addNews}
+              element={<ActionNews></ActionNews>}
+            ></Route>
+            <Route
+              path={Epath.updateNews}
+              element={<ActionNews></ActionNews>}
             ></Route>
           </Route>
           <Route path="*" element={<NotFoundPage></NotFoundPage>}></Route>

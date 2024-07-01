@@ -4,6 +4,7 @@ import {
   BookMinus,
   Home,
   LogOut,
+  Newspaper,
   Package,
   Settings,
   Shirt,
@@ -101,6 +102,14 @@ const SideBar = () => {
       className: ` ${
         dataCurrentUser?.roleID === statusRole.STAFF && "!hidden"
       } `,
+    },
+    {
+      type: "divider",
+    },
+    {
+      key: "news",
+      label: "Tin Tức",
+      icon: <Newspaper size={"18px"} />,
     },
     {
       key: "grp",

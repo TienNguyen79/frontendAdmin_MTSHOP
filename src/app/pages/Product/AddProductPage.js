@@ -50,7 +50,7 @@ const AddProductPage = () => {
   const { dataAllSize } = useSelector((state) => state.product);
   const { dataAllColor } = useSelector((state) => state.product);
   const dataAllCategory = useSelector(
-    (state) => state.category.dataAllCategory.results
+    (state) => state?.category?.dataAllCategory?.results
   );
 
   const optionSize =

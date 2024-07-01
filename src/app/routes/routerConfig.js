@@ -27,6 +27,10 @@ export const Epath = {
   updateUser: "/users/update/:id",
   settingUser: "/setttings",
 
+  news: "/news",
+  addNews: "/news/create",
+  updateNews: "/news/update/:id",
+
   //order
   orders: "/orders",
 
