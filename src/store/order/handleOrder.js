@@ -2,13 +2,14 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { toast } from "react-toastify";
 import requestGetAllOrder, {
+  requestBackStatusOrder,
   requestCancelOrder,
   requestDeleteOrder,
   requestUpdateStatusOrder,
 } from "./requestOrder";
 
 export const handleGetAllOrder = createAsyncThunk(
-  "category/handleGetAllOrder",
+  "order/handleGetAllOrder",
   async (data, thunkAPI) => {
     try {
       const response = await requestGetAllOrder(data);
@@ -20,7 +21,7 @@ export const handleGetAllOrder = createAsyncThunk(
 );
 
 export const handleUpdateStatusOrder = createAsyncThunk(
-  "category/handleUpdateStatusOrder",
+  "order/handleUpdateStatusOrder",
   async (data, thunkAPI) => {
     try {
       const response = await requestUpdateStatusOrder(data);
@@ -34,8 +35,23 @@ export const handleUpdateStatusOrder = createAsyncThunk(
   }
 );
 
+export const handleBackStatusOrder = createAsyncThunk(
+  "order/handleBackStatusOrder",
+  async (data, thunkAPI) => {
+    try {
+      const response = await requestBackStatusOrder(data);
+      if (response.status === 200) {
+        data?.callBack?.();
+      }
+    } catch (error) {
+      toast.error(error?.response?.data?.ms, { autoClose: 800 });
+      console.log("🚀 ~ error:", error);
+    }
+  }
+);
+
 export const handleCancelOrder = createAsyncThunk(
-  "category/handleCancelOrder",
+  "order/handleCancelOrder",
   async (data, thunkAPI) => {
     try {
       const response = await requestCancelOrder(data);
@@ -50,7 +66,7 @@ export const handleCancelOrder = createAsyncThunk(
 );
 
 export const handleDeleteOrder = createAsyncThunk(
-  "category/handleDeleteOrder",
+  "order/handleDeleteOrder",
   async (data, thunkAPI) => {
     try {
       const response = await requestDeleteOrder(data);

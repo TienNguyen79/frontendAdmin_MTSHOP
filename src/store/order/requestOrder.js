@@ -15,6 +15,10 @@ export function requestUpdateStatusOrder(data) {
   return axiosClient.put(`/order/${data.id}`);
 }
 
+export function requestBackStatusOrder(data) {
+  return axiosClient.put(`/order/backStatus/${data.id}`);
+}
+
 export function requestCancelOrder(data) {
   return axiosClient.put(`/cancelOrder/${data.id}`);
 }

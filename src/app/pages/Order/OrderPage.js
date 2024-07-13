@@ -1,10 +1,18 @@
 import React, { useCallback, useEffect, useState } from "react";
 import LayoutDetail from "../../components/Layout/LayoutDetail";
-import { CircleX, Search, SquarePen, SquareX, Trash } from "lucide-react";
+import {
+  CircleX,
+  Search,
+  SquarePen,
+  SquareX,
+  Trash,
+  Undo2,
+} from "lucide-react";
 import { Select, Table, Tag } from "antd";
 import { convertDateNumeric, formatPrice } from "../../../utils/functions";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  handleBackStatusOrder,
   handleCancelOrder,
   handleGetAllOrder,
   handleUpdateStatusOrder,
@@ -121,14 +129,23 @@ const OrderPage = () => {
         return (
           <div
             className={`flex items-center gap-x-3 ${
-              status === 5 ? "hidden" : ""
+              status === 5 || status === 0 ? "hidden" : ""
             }`}
           >
             <div
-              className="cursor-pointer hover:text-primary transition-all"
+              className={`cursor-pointer hover:text-primary transition-all`}
               onClick={() => handleUpdateStatusOrderForm(id)}
             >
               <SquarePen size={"20px"} />
+            </div>
+
+            <div
+              className={`cursor-pointer hover:text-primary transition-all ${
+                status === 1 ? "hidden" : ""
+              }`}
+              onClick={() => handleBackStatusOrderForm(id)}
+            >
+              <Undo2 size={"20px"} />
             </div>
 
             <span
@@ -180,6 +197,30 @@ const OrderPage = () => {
       if (result.isConfirmed) {
         dispatch(
           handleUpdateStatusOrder({
+            id: id,
+            callBack: () => {
+              Swal.fire("Cập Nhật Thành Công!", "", "success");
+              dispatch(handleGetAllOrder({ statusOrder: statusOrder }));
+              setValue("orderId", "");
+            },
+          })
+        );
+      }
+    });
+  };
+  const handleBackStatusOrderForm = (id) => {
+    Swal.fire({
+      title: `Quay lại trạng thái trước của đơn hàng #${id}`,
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Cập nhật",
+      cancelButtonText: "Hủy Bỏ",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(
+          handleBackStatusOrder({
             id: id,
             callBack: () => {
               Swal.fire("Cập Nhật Thành Công!", "", "success");
