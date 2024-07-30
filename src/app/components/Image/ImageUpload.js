@@ -48,6 +48,11 @@ const ImageUpload = ({
 
       setShowImage(imageObj.url);
     } catch (error) {
+      // để tạm
+      const imageObj = {
+        url: "https://i.ytimg.com/vi/Yxv5Rk3-d1A/maxresdefault.jpg",
+      };
+      onChange(name, imageObj);
       console.log("🚀 ~ handleUploadImage ~ error:", error);
     }
   };
